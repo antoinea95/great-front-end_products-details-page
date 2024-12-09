@@ -2,7 +2,7 @@
 export const Nav = ({isOpen} : {isOpen: boolean}) => {
 
 const mobileNav = `bg-white absolute left-0 top-16 overflow-hidden w-screen h-screen max-h-dvh p-4 px-14 transition-all ${isOpen ? "-translate-x-6" : "pointer-events-none -translate-x-[100vw]"}`
-const desktopNav =  "lg:static lg:translate-x-0 lg:w-fit lg:pointer-events-all"
+const desktopNav =  "lg:static lg:translate-x-0 lg:w-fit lg:pointer-events-all lg:h-fit"
 
   return (
     <nav className={`text-lg ${mobileNav} ${desktopNav}`}>
