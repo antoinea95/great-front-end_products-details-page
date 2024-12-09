@@ -7,10 +7,10 @@ export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="text-xl col-span-4 sm:col-span-6 lg:col-span-12 h-fit flex items-center justify-between">
+    <header className="text-2xl col-span-4 sm:col-span-6 lg:col-span-12 h-fit flex items-center justify-between">
       {/* Logo */}
-      <div className="flex items-center justify-between lg:w-2/5">
-        <img src="./assets/navbar/stylenest.svg" alt="Stylenest logo" />
+      <div className="flex items-center justify-between lg:w-1/2">
+        <img src="./assets/navbar/stylenest.svg" alt="Stylenest logo" className="lg:w-32" />
         <Nav isOpen={isOpen} />
       </div>
 
