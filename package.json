@@ -1,13 +1,15 @@
 {
   "name": "gfe-products-details-pages",
-  "private": true,
+  "homepage": "https://great-front-end-products-details-page-cj8fr019o.vercel.app/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "autoprefixer": "^10.4.20",
