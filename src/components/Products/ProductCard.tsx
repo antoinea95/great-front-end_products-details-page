@@ -32,23 +32,13 @@ export const ProductCard = ({ product }: { product: ProductType }) => {
   }, [product.inventory, colorToDisplay]);
 
   return (
-    <section
-      className="cursor-pointer group pb-3 rounded-lg hover:bg-gray-50 transition-all"
-      onClick={() => navigate(`/${product.product_id}`)}
-      role="button"
-      tabIndex={0}
-      aria-label={`View details of ${product.name}`}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          navigate(`/${product.product_id}`);
-        }
-      }}
-    >
+    <section className="group pb-3 rounded-lg hover:bg-gray-50 transition-all">
       <header className="rounded-lg overflow-hidden w-full h-72 relative flex items-center justify-center group-hover:shadow-md transition-all">
         <img
           src={coverImg?.image_url}
           alt={`Product: ${product.name} in color ${colorToDisplay}`}
           className="object-cover w-full h-full group-hover:scale-110 group-hover:drop-shadow-xl transition-all"
+          loading="lazy"
         />
       </header>
       <section className="flex flex-col justify-between gap-4 px-2 pt-4">
@@ -56,7 +46,20 @@ export const ProductCard = ({ product }: { product: ProductType }) => {
           <p className="capitalize text-xs font-light text-gray-400">
             {colorToDisplay}
           </p>
-          <h2 className="text-lg">{product.name}</h2>
+          <h2
+            className="text-lg cursor-pointer underline lg:no-underline hover:underline transition-all"
+            onClick={() => navigate(`/${product.product_id}`)}
+            role="button"
+            tabIndex={0}
+            aria-label={`View details of ${product.name}`}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                navigate(`/${product.product_id}`);
+              }
+            }}
+          >
+            {product.name}
+          </h2>
         </div>
 
         {priceByColor.sale ? (

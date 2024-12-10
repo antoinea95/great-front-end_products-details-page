@@ -1,11 +1,38 @@
+import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import { ProductType } from "./Product.types";
 import { ProductCard } from "./ProductCard";
 
 export const ProductsGrid = () => {
   const { data: products, isLoading } = useFetch("products");
+  const [imagesLoaded, setImagesLoaded] = useState(false);
 
-  if (isLoading) {
+  useEffect(() => {
+    if (products?.data) {
+      const imageUrls = products.data.flatMap((product: ProductType) =>
+        product.images.map((img) => img.image_url)
+      );
+
+      const preloadImages = async () => {
+        await Promise.all(
+          imageUrls.map(
+            (url: string) =>
+              new Promise((resolve) => {
+                const img = new Image();
+                img.src = url;
+                img.onload = resolve;
+                img.onerror = resolve;
+              })
+          )
+        );
+        setImagesLoaded(true);
+      };
+
+      preloadImages();
+    }
+  }, [products]);
+
+  if (isLoading || !imagesLoaded) {
     return <p>...loading</p>;
   }
 
