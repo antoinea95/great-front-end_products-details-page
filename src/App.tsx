@@ -1,12 +1,19 @@
-import { Header } from "./components/Header/Header"
+import { Route, Routes } from "react-router";
+import { Home } from "./pages/Home";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+const queryClient = new QueryClient();
 
 function App() {
-
   return (
-    <main className="max-w-[1280px] w-screen h-screen max-h-dvh m-auto grid grid-cols-4 gap-x-4 sm:grid-cols-6 sm:gap-x-8 lg:grid-cols-12 py-8 px-4 sm:px-8">
-      <Header />
-    </main>
-  )
+    <QueryClientProvider client={queryClient}>
+      <Routes>
+        <Route index element={<Home />} />
+      </Routes>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
 }
 
-export default App
+export default App;
