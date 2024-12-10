@@ -8,6 +8,8 @@ export const useFetch = (endpoint: string, params?: Record<string, string>) => {
         url += `?${queryString}`;
     }
 
+    console.log(url)
+
     const {data, isLoading, isError, error, isFetched} = useQuery({
         queryKey: [endpoint, params], 
         queryFn: async () => {

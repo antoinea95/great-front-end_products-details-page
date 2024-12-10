@@ -2,9 +2,15 @@ import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import { ProductType } from "./Product.types";
 import { ProductCard } from "./ProductCard";
+import { useLocation} from "react-router";
 
-export const ProductsGrid = () => {
-  const { data: products, isLoading } = useFetch("products");
+export const ProductsGrid = ({
+  params,
+}: {
+  params?: Record<string, string>;
+}) => {
+  const {pathname} = useLocation();
+  const { data: products, isLoading } = useFetch("products", params);
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
@@ -37,10 +43,13 @@ export const ProductsGrid = () => {
   }
 
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16 w-fit max-w-full mx-auto">
-      {products.data.map((product: ProductType) => (
-        <ProductCard product={product} key={product.product_id} />
-      ))}
-    </section>
+    <div>
+      <h1 className="text-2xl lg:text-3xl">{pathname === "/latest" ? "Latest Arrivals" : "All products"}</h1>
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16 w-fit max-w-full mx-auto py-8">
+        {products.data.map((product: ProductType) => (
+          <ProductCard product={product} key={product.product_id} />
+        ))}
+      </section>
+    </div>
   );
 };

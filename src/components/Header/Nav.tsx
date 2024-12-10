@@ -1,4 +1,13 @@
-export const Nav = ({ isOpen }: { isOpen: boolean }) => {
+import { Dispatch, SetStateAction } from "react";
+import { NavLink } from "react-router";
+
+export const Nav = ({
+  isOpen,
+  setIsOpen,
+}: {
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   const mobileNav = `bg-white absolute left-0 top-16 overflow-hidden w-screen h-screen max-h-dvh py-8 px-14 transition-all ${
     isOpen
       ? "-translate-x-6 pointer-events-auto"
@@ -9,7 +18,7 @@ export const Nav = ({ isOpen }: { isOpen: boolean }) => {
 
   return (
     <nav
-      className={`text-base lg:text-xl ${mobileNav} ${desktopNav}`}
+      className={`text-xl lg:text-2xl ${mobileNav} ${desktopNav} z-50`}
       aria-label="Main-navigation"
     >
       <ul
@@ -17,22 +26,41 @@ export const Nav = ({ isOpen }: { isOpen: boolean }) => {
         role="menu"
       >
         <li className="relative group whitespace-nowrap" role="menuitem">
-          <a
-            href="#"
-            className="focus:outline-none focus-visible:ring focus-visible:ring-black"
+          <NavLink
+            to="/shop-all"
+            className={`relative focus:outline-none focus-visible:ring focus-visible:ring-black w-fit`}
+            onClick={() => setTimeout(() => setIsOpen(false), 500)}
           >
-            Shop all
-          </a>
-          <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-black transition-all duration-200 group-hover:w-full"></span>
+            {({ isActive }) => (
+              <>
+                Shop all
+                <span
+                  className={`absolute left-0 bottom-0 h-0.5 bg-black transition-all duration-200 ${
+                    isActive ? "w-full" : "w-0 lg:group-hover:w-full"
+                  }`}
+                ></span>
+              </>
+            )}
+          </NavLink>
         </li>
         <li className="relative group whitespace-nowrap" role="menuitem">
-          <a
-            href="#Test"
-            className="focus:outline-none focus-visible:ring focus-visible:ring-black"
+          <NavLink
+            to="/latest"
+            className={`relative focus:outline-none focus-visible:ring focus-visible:ring-black w-fit`}
+            onClick={() => setTimeout(() => setIsOpen(false), 500)}
+
           >
-            Latest arrivals
-          </a>
-          <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-black transition-all duration-200 group-hover:w-full"></span>
+            {({ isActive }) => (
+              <>
+                Latest arrivals
+                <span
+                  className={`absolute left-0 bottom-0 h-0.5 bg-black transition-all duration-200 ${
+                    isActive ? "w-full" : "w-0 group-hover:w-full"
+                  }`}
+                ></span>
+              </>
+            )}
+          </NavLink>
         </li>
       </ul>
     </nav>

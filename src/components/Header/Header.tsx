@@ -2,6 +2,7 @@ import { ShoppingCartBtn } from "./ShoppingCartBtn";
 import { Nav } from "./Nav";
 import { useState } from "react";
 import { RiCloseLine, RiMenuLine } from "react-icons/ri";
+import { Link } from "react-router";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,19 +14,18 @@ export const Header = () => {
     >
       {/* Logo & Navigation */}
       <div className="flex items-center justify-between lg:w-1/2">
-        <img
-          src="./assets/navbar/stylenest.svg"
-          alt="Stylenest logo"
-          className="lg:w-32"
-        />
-        <Nav isOpen={isOpen} />
+        <Link to="/">
+          <img
+            src="./assets/navbar/stylenest.svg"
+            alt="Stylenest logo"
+            className="lg:w-32"
+          />
+        </Link>
+        <Nav isOpen={isOpen} setIsOpen={setIsOpen} />
       </div>
 
       {/* Actions buttons */}
-      <section
-        className="flex items-center gap-4"
-        aria-label="Action buttons"
-      >
+      <section className="flex items-center gap-4" aria-label="Action buttons">
         {!isOpen && <ShoppingCartBtn />}
         <button
           onClick={() => setIsOpen(!isOpen)}

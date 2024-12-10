@@ -1,18 +1,18 @@
 import { Route, Routes } from "react-router";
+import { Header } from "./components/Header/Header";
 import { Home } from "./pages/Home";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
-const queryClient = new QueryClient();
+import { ProductsGrid } from "./components/Products/ProductsGrid";
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <main className="max-w-[1280px] w-screen h-screen max-h-dvh m-auto py-8 px-4 sm:px-8 space-y-8">
+      <Header />
       <Routes>
-        <Route index element={<Home />} />
+        <Route path="/" element={<Home />} />
+        <Route path="shop-all" element={<ProductsGrid />} />
+        <Route path="latest" element={<ProductsGrid params={{"collection": "latest"}} />} />
       </Routes>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    </main>
   );
 }
 
