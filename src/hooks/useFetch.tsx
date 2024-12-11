@@ -1,6 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 
-export const useFetch = (endpoint: string, params?: Record<string, string>) => {
+type ReturnHookType<T> = {
+    data: T,
+    isLoading: boolean,
+    isError: boolean,
+    error: Error | null,
+    isFetched: boolean
+}
+
+export const useFetch = <T,>(endpoint: string, params?: Record<string, string>) : ReturnHookType<T> => {
     const baseUrl = "https://www.greatfrontend.com/api/projects/challenges/e-commerce";
     let url = `${baseUrl}/${endpoint}`;
     if (params) {
@@ -8,10 +16,8 @@ export const useFetch = (endpoint: string, params?: Record<string, string>) => {
         url += `?${queryString}`;
     }
 
-    console.log(url)
-
     const {data, isLoading, isError, error, isFetched} = useQuery({
-        queryKey: [endpoint, params], 
+        queryKey: params ? [endpoint, params] : [endpoint], 
         queryFn: async () => {
         const response = await fetch(url);
 

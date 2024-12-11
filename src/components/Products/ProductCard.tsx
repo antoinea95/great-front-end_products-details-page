@@ -1,10 +1,13 @@
 import { useMemo, useState } from "react";
 import { ProductType } from "./Product.types";
-import { formatImages } from "../../utils/productsimages.utils";
+import { formatImages } from "../../utils/products.utils";
 import { useNavigate } from "react-router";
+import { PriceTag } from "../Elements/PriceTag";
+import { useGetProductDetailsByColor } from "../../hooks/products.hook";
 
 export const ProductCard = ({ product }: { product: ProductType }) => {
   const [colorToDisplay, setColorToDisplay] = useState(product.colors[0]);
+  const {price} = useGetProductDetailsByColor(product, colorToDisplay);
   const navigate = useNavigate();
 
   const coverImg = useMemo(
@@ -15,24 +18,8 @@ export const ProductCard = ({ product }: { product: ProductType }) => {
     [product.images, colorToDisplay]
   );
 
-  const priceByColor = useMemo(() => {
-    const result = product.inventory.find(
-      (item) => item.color === colorToDisplay
-    );
-
-    if (result) {
-      const isDiscount =
-        result.discount !== null || result.discount_percentage !== null;
-      if (isDiscount) {
-        return { sale: result.sale_price, list: result.list_price };
-      }
-      return { list: result.list_price };
-    }
-    return {};
-  }, [product.inventory, colorToDisplay]);
-
   return (
-    <section className="group pb-3 rounded-lg hover:bg-gray-50 transition-all">
+    <section className="group pb-3 rounded-lg hover:bg-neutral-50 transition-all">
       <header className="rounded-lg overflow-hidden w-full h-72 relative flex items-center justify-center group-hover:shadow-md transition-all">
         <img
           src={coverImg?.image_url}
@@ -43,12 +30,12 @@ export const ProductCard = ({ product }: { product: ProductType }) => {
       </header>
       <section className="flex flex-col justify-between gap-4 px-2 pt-4">
         <div className="leading-3">
-          <p className="capitalize text-xs font-light text-gray-400">
+          <p className="capitalize text-xs font-light text-neutral-500">
             {colorToDisplay}
           </p>
           <h2
-            className="text-lg cursor-pointer underline lg:no-underline hover:underline transition-all"
-            onClick={() => navigate(`/${product.product_id}`)}
+            className="text-lg cursor-pointer underline lg:no-underline hover:underline transition-all text-neutral-900"
+            onClick={() => navigate(`/${product.product_id}?color=${colorToDisplay}`)}
             role="button"
             tabIndex={0}
             aria-label={`View details of ${product.name}`}
@@ -62,23 +49,14 @@ export const ProductCard = ({ product }: { product: ProductType }) => {
           </h2>
         </div>
 
-        {priceByColor.sale ? (
-          <p className="text-lg text-gray-400 font-light flex items-center gap-2">
-            ${priceByColor.sale}{" "}
-            <span className="text-xs line-through">${priceByColor.list}</span>
-          </p>
-        ) : (
-          <p className="text-lg text-gray-400 font-light">
-            ${priceByColor.list}
-          </p>
-        )}
+        <PriceTag price={price} mainPriceSet="text-lg text-neutral-600 font-light" littlePriceSet="text-xs text-neutral-500" />
         <div className="gap-2 flex items-center">
           {product.colors.map((color) => (
             <button
               key={color}
               onClick={() => setColorToDisplay(color)}
               className={`w-5 h-5 rounded-full cursor-pointer border flex items-center justify-center ${
-                colorToDisplay === color ? " border-black" : ""
+                colorToDisplay === color ? " border-neutral-600" : ""
               }`}
               style={{ backgroundColor: `${color}` }}
               aria-label={`Select color ${color}`}

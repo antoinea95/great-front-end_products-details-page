@@ -17,7 +17,7 @@ export type ImageItem = {
   image_url: string;
 };
 
-type InventoryItem = {
+export type InventoryItem = {
   color: string;
   discount: number | null;
   discount_percentage: number | null;
@@ -34,6 +34,16 @@ type PriceRange = {
   lowest: number;
 };
 
+export type PaginationType = {
+  has_more: boolean;
+  page: number;
+  per_page: number;
+  total: number;
+};
+
+export type SizeClothesKey = "xs" | "sm" | "md" | "lg" | "xl";
+export type SizeShoesKey = number;
+
 export type ProductType = {
   category: Category;
   collection: Collection;
@@ -47,6 +57,6 @@ export type ProductType = {
   product_id: string;
   rating: number;
   reviews: number;
-  sizes: string[];
+  sizes: SizeClothesKey[] | SizeShoesKey[];
   sold: number;
 };

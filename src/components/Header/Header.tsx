@@ -29,7 +29,7 @@ export const Header = () => {
         {!isOpen && <ShoppingCartBtn />}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden focus:outline-none focus-visible:ring focus-visible:ring-black"
+          className="lg:hidden focus:outline-none focus-visible:ring focus-visible:ring-black text-neutral-900"
           aria-controls="main-navigation"
           aria-expanded={isOpen}
           aria-label={isOpen ? "Close menu" : "Open menu"}
