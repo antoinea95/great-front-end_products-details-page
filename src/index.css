@@ -11,6 +11,10 @@ body {
   overflow-x:hidden;
 }
 
+#root {
+  background-color: "#fafafa";
+}
+
 * {
   box-sizing: border-box;
 }
