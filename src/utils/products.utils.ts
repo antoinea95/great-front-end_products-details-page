@@ -27,15 +27,14 @@ export const formatImages = (images: ImageItem[]): ImageItem[] => {
 };
 
 export const handleChangeAndUpdateParamsUrl = (
-  e: React.ChangeEvent<HTMLInputElement>,
+  item: string,
   setItem: Dispatch<SetStateAction<string>>,
   paramsName: string,
   setSearchParams: SetURLSearchParams,
   searchParams: URLSearchParams
 ) => {
-  const newItem = e.target.value;
 
-  setItem(newItem);
-  searchParams.set(paramsName, newItem);
+  setItem(item);
+  searchParams.set(paramsName, item);
   setSearchParams(searchParams);
 };
