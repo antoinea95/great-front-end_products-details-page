@@ -13,12 +13,11 @@ export const Header = () => {
       role="banner"
     >
       {/* Logo & Navigation */}
-      <div className="flex items-center justify-between lg:w-1/2">
+      <div className="flex items-center justify-between lg:w-[40%]">
         <Link to="/">
           <img
             src="./assets/navbar/stylenest.svg"
             alt="Stylenest logo"
-            className="lg:w-32"
           />
         </Link>
         <Nav isOpen={isOpen} setIsOpen={setIsOpen} />

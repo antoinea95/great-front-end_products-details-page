@@ -4,47 +4,59 @@ import { ProductType } from "../components/Products/Product.types";
 // Hook pour récupérer les informations liées à une couleur spécifique
 export const useGetProductDetailsByColor = (
   product: ProductType,
-  colorToDisplay: string
+  colorToDisplay: string,
+  sizeToDisplay?: string | null
 ) => {
   return useMemo(() => {
     if (!product || !colorToDisplay) {
-      // Retourne des valeurs par défaut si les paramètres sont manquants
       return {
         inventoryItem: null,
+        stockInThisColor: null,
+        stockBySizes: null,
         images: [],
-        price: null,
-        discount: null,
       };
     }
-    // Trouver l'inventaire et l'image correspondant à la couleur
-    const inventoryItem = product.inventory.find(
-      (item) => item.color === colorToDisplay
+
+    const stockInThisColor = product.inventory.reduce<Record<string, number>>(
+      (acc, item) => {
+        acc[item.color] = item.stock;
+        return acc;
+      },
+      {}
     );
+
+    const stockBySizes =
+      product.sizes.length > 0
+        ? product.inventory
+            .filter((item) => item.color === colorToDisplay)
+            .reduce<Record<string, number>>((acc, item) => {
+              const size = item.size.toString();
+              acc[size] = item.stock;
+              return acc;
+            }, {})
+        : null;
+
+    const inventoryItem = product.inventory.find((item) => {
+      if (product.sizes.length > 0 && sizeToDisplay) {
+        const sizeType = typeof item.size;
+        const findSize =
+          sizeType === "string"
+            ? item.size === sizeToDisplay
+            : item.size === Number(sizeToDisplay);
+        return item.color === colorToDisplay && findSize;
+      }
+      return item.color === colorToDisplay;
+    });
+
     const imageItems = product.images.filter(
       (image) => image.color === colorToDisplay
     );
 
-      // Calculer le prix en fonction de l'inventaire trouvé
-      const salePrice = inventoryItem?.sale_price;
-      const listPrice = inventoryItem?.list_price;
-      const price: { sale?: number, list?: number } | null = inventoryItem ? {
-        list: listPrice,
-      } : null;
-      if (salePrice !== listPrice && price) price.sale = salePrice;
-
-    const discount = inventoryItem
-      ? inventoryItem.discount_percentage
-        ? `${inventoryItem.discount_percentage}% OFF`
-        : inventoryItem.discount
-        ? `${inventoryItem.discount}$ OFF`
-        : null
-      : null;
-
     return {
       inventoryItem,
+      stockInThisColor,
+      stockBySizes,
       images: imageItems,
-      price,
-      discount,
     };
-  }, [product, colorToDisplay]);
+  }, [product, colorToDisplay, sizeToDisplay]);
 };

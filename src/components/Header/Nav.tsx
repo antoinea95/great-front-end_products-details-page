@@ -18,7 +18,7 @@ export const Nav = ({
 
   return (
     <nav
-      className={`text-xl lg:text-2xl ${mobileNav} ${desktopNav} z-50`}
+      className={`${mobileNav} ${desktopNav} z-50 text-base`}
       aria-label="Main-navigation"
     >
       <ul

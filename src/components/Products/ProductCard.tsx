@@ -2,12 +2,12 @@ import { useMemo, useState } from "react";
 import { ProductType } from "./Product.types";
 import { formatImages } from "../../utils/products.utils";
 import { useNavigate } from "react-router";
-import { PriceTag } from "../Elements/PriceTag";
 import { useGetProductDetailsByColor } from "../../hooks/products.hook";
+import { PriceTag } from "../Elements/PriceTag";
 
 export const ProductCard = ({ product }: { product: ProductType }) => {
   const [colorToDisplay, setColorToDisplay] = useState(product.colors[0]);
-  const {price} = useGetProductDetailsByColor(product, colorToDisplay);
+  const { inventoryItem } = useGetProductDetailsByColor(product, colorToDisplay);
   const navigate = useNavigate();
 
   const coverImg = useMemo(
@@ -17,6 +17,10 @@ export const ProductCard = ({ product }: { product: ProductType }) => {
       ),
     [product.images, colorToDisplay]
   );
+
+  if(!inventoryItem) {
+    return <p>...loading</p>
+  }
 
   return (
     <section className="group pb-3 rounded-lg hover:bg-neutral-50 transition-all">
@@ -35,7 +39,15 @@ export const ProductCard = ({ product }: { product: ProductType }) => {
           </p>
           <h2
             className="text-lg cursor-pointer underline lg:no-underline hover:underline transition-all text-neutral-900"
-            onClick={() => navigate(`/${product.product_id}?color=${colorToDisplay}`)}
+            onClick={() =>
+              navigate(
+                `/${product.product_id}?color=${colorToDisplay}${
+                  product.sizes.length > 0
+                    ? `&size=${product.sizes[0].toString()}`
+                    : ""
+                }`
+              )
+            }
             role="button"
             tabIndex={0}
             aria-label={`View details of ${product.name}`}
@@ -49,7 +61,9 @@ export const ProductCard = ({ product }: { product: ProductType }) => {
           </h2>
         </div>
 
-        <PriceTag price={price} mainPriceSet="text-lg text-neutral-600 font-light" littlePriceSet="text-xs text-neutral-500" />
+        <PriceTag
+          inventoryItem={inventoryItem}
+        />
         <div className="gap-2 flex items-center">
           {product.colors.map((color) => (
             <button

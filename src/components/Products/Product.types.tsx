@@ -23,7 +23,7 @@ export type InventoryItem = {
   discount_percentage: number | null;
   list_price: number;
   sale_price: number;
-  size: string;
+  size: number | string;
   sku: string;
   sold: number;
   stock: number;

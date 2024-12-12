@@ -1,26 +1,20 @@
-export const PriceTag = ({
-  price,
-  mainPriceSet,
-  littlePriceSet,
-}: {
-  price: { sale?: number; list?: number } | null;
-  mainPriceSet: string;
-  littlePriceSet: string;
-}) => {
+import { InventoryItem } from "../Products/Product.types";
 
-    if(!price) return;
-  return (
-    <>
-      {price.sale ? (
-        <p className={`flex items-center gap-2 ${mainPriceSet}`}>
-          ${price.sale}{" "}
-          <span className={`${littlePriceSet} line-through`}>
-            ${price.list}
+export const PriceTag = ({inventoryItem} : {inventoryItem: InventoryItem}) => {
+
+    const displaySalePrice = inventoryItem.sale_price !== inventoryItem.list_price;
+
+    return (
+        <p className="flex items-center gap-2 text-3xl text-neutral-600">
+        $
+        {displaySalePrice
+          ? inventoryItem.sale_price
+          : inventoryItem.list_price}
+        {displaySalePrice && (
+          <span className="line-through text-base font-light text-neutral-500">
+            ${inventoryItem.list_price}
           </span>
-        </p>
-      ) : (
-        <p className={`${mainPriceSet}`}>${price.list}</p>
-      )}
-    </>
-  );
-};
+        )}
+      </p>
+    )
+}
