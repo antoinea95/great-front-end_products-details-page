@@ -9,7 +9,7 @@ export const Header = () => {
 
   return (
     <header
-      className="text-2xl col-span-4 sm:col-span-6 lg:col-span-12 h-fit flex items-center justify-between"
+      className="col-span-4 sm:col-span-6 lg:col-span-12 h-fit flex items-center justify-between"
       role="banner"
     >
       {/* Logo & Navigation */}
@@ -28,7 +28,7 @@ export const Header = () => {
         {!isOpen && <ShoppingCartBtn />}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden focus:outline-none focus-visible:ring focus-visible:ring-black text-neutral-900"
+          className="lg:hidden focus:outline-none focus-visible:ring focus-visible:ring-black"
           aria-controls="main-navigation"
           aria-expanded={isOpen}
           aria-label={isOpen ? "Close menu" : "Open menu"}

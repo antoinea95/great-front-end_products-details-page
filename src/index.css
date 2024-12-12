@@ -9,11 +9,14 @@ body {
     sans-serif;
   min-height: 100vh;
   overflow-x:hidden;
+  background-color: theme(colors.gray.200);
+  color: theme(colors.neutral.900);
 }
 
-#root {
-  background-color: "#fafafa";
+button {
+  font-weight: 500;
 }
+
 
 * {
   box-sizing: border-box;

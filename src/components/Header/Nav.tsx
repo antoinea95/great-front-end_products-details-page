@@ -8,7 +8,7 @@ export const Nav = ({
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const mobileNav = `bg-white absolute left-0 top-16 overflow-hidden w-screen h-screen max-h-dvh py-8 px-14 transition-all ${
+  const mobileNav = `bg-gray-200 absolute left-0 top-16 overflow-hidden w-screen h-screen max-h-dvh py-8 px-14 transition-all ${
     isOpen
       ? "-translate-x-6 pointer-events-auto"
       : "pointer-events-none -translate-x-[100vw]"
@@ -18,7 +18,7 @@ export const Nav = ({
 
   return (
     <nav
-      className={`${mobileNav} ${desktopNav} z-50 text-base`}
+      className={`${mobileNav} ${desktopNav} z-50`}
       aria-label="Main-navigation"
     >
       <ul

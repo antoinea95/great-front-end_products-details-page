@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SizeClothesKey, SizeShoesKey } from "../Products/Product.types";
 import { useSearchParams } from "react-router";
 import { handleChangeAndUpdateParamsUrl } from "../../utils/products.utils";
+import { ProductInfoSection } from "../Products/ProductInfoSection";
 
 export const Sizes = ({
   sizes,
@@ -24,8 +25,7 @@ export const Sizes = ({
     xl: "XL",
   };
   return (
-    <section className="space-y-4">
-      <h3 className="text-neutral-500">Avalaible Sizes</h3>
+    <ProductInfoSection title="Avalaible Sizes">
       <div className="flex items-center gap-4 flex-wrap">
         {sizes.map((size) => (
           <div
@@ -34,7 +34,7 @@ export const Sizes = ({
               selectedSize === size.toString() ? " border-indigo-700" : ""
             }`}
           >
-            <label htmlFor={size.toString()}>
+            <label htmlFor={size.toString()} className="text-lg font-medium">
               {typeof size === "string" ? sizesMap[size] : size}
             </label>
             <input
@@ -45,7 +45,7 @@ export const Sizes = ({
               value={size}
               onChange={(e) =>
                 handleChangeAndUpdateParamsUrl(
-                  e,
+                  e.target.value,
                   setSelectedSize,
                   "size",
                   setSearchParams,
@@ -57,6 +57,6 @@ export const Sizes = ({
           </div>
         ))}
       </div>
-    </section>
+    </ProductInfoSection>
   );
 };

@@ -4,6 +4,7 @@ import { formatImages } from "../../utils/products.utils";
 import { useNavigate } from "react-router";
 import { useGetProductDetailsByColor } from "../../hooks/products.hook";
 import { PriceTag } from "../Elements/PriceTag";
+import { sectionSubtitle } from "../../utils/tailwindClass";
 
 export const ProductCard = ({ product }: { product: ProductType }) => {
   const [colorToDisplay, setColorToDisplay] = useState(product.colors[0]);
@@ -34,18 +35,18 @@ export const ProductCard = ({ product }: { product: ProductType }) => {
       </header>
       <section className="flex flex-col justify-between gap-4 px-2 pt-4">
         <div className="leading-3">
-          <p className="capitalize text-xs font-light text-neutral-500">
+          <small className="capitalize text-neutral-600">
             {colorToDisplay}
-          </p>
+          </small>
           <h2
-            className="text-lg cursor-pointer underline lg:no-underline hover:underline transition-all text-neutral-900"
+            className={`${sectionSubtitle} cursor-pointer hover:underline`}
             onClick={() =>
               navigate(
                 `/${product.product_id}?color=${colorToDisplay}${
                   product.sizes.length > 0
                     ? `&size=${product.sizes[0].toString()}`
                     : ""
-                }`
+                }&quantity=1`
               )
             }
             role="button"
@@ -64,13 +65,13 @@ export const ProductCard = ({ product }: { product: ProductType }) => {
         <PriceTag
           inventoryItem={inventoryItem}
         />
-        <div className="gap-2 flex items-center">
+        <div className="gap-4 flex items-center">
           {product.colors.map((color) => (
             <button
               key={color}
               onClick={() => setColorToDisplay(color)}
               className={`w-5 h-5 rounded-full cursor-pointer border flex items-center justify-center ${
-                colorToDisplay === color ? " border-neutral-600" : ""
+                colorToDisplay === color ? "border-neutral-600" : "border-neutral-200"
               }`}
               style={{ backgroundColor: `${color}` }}
               aria-label={`Select color ${color}`}

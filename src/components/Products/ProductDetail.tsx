@@ -7,6 +7,8 @@ import { Sizes } from "../Elements/Sizes";
 import { useGetProductDetailsByColor } from "../../hooks/products.hook";
 import { ProductType } from "./Product.types";
 import { PriceTag } from "../Elements/PriceTag";
+import { QuantityModifier } from "../Elements/QuantityModifier";
+import { cardTitle } from "../../utils/tailwindClass";
 
 export const ProductDetail = () => {
   const { productId } = useParams();
@@ -30,22 +32,23 @@ export const ProductDetail = () => {
   const isDiscount = inventoryItem.discount || inventoryItem.discount_percentage;
 
   return (
-    <section className="space-y-4">
+    <section className="space-y-12 bg-white px-4 pt-12 rounded-md">
       <ProductCarousel images={images} />
-      <section className="space-y-4">
-        <h1 className="text-2xl lg:text-3xl font-medium text-neutral-900">
+      <section className="space-y-8">
+        <h1 className={cardTitle}>
           {product.name}
         </h1>
         <div className="w-fit space-y-2">
           <PriceTag inventoryItem={inventoryItem}  />
-         {isDiscount && <p className="bg-amber-50 border border-amber-200 text-amber-700 w-fit py-1 px-4 rounded-full">
+         {isDiscount && <span className="font-medium text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-full py-1 px-2 inline-flex">
             {inventoryItem.discount ? `${inventoryItem.discount}$ OFF` : `${inventoryItem.discount_percentage}% OFF`}
-          </p>}
+          </span>}
           <Rating rating={product.rating} reviews={product.reviews} />
         </div>
-        <p className="text-neutral-600">{product.description}</p>
+        <p>{product.description}</p>
         <SelectColor colors={product.colors} stockInThisColor={stockInThisColor} />
         {stockBySizes && <Sizes sizes={product.sizes} stockBySizes={stockBySizes} />}
+        <QuantityModifier stock={stockBySizes ? stockBySizes : stockInThisColor} selectedKey={sizeToDisplay ? sizeToDisplay : colorToDisplay} />
       </section>
     </section>
   );

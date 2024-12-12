@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { RiCheckLine, RiCloseLine } from "react-icons/ri";
 import { useSearchParams } from "react-router";
 import { handleChangeAndUpdateParamsUrl } from "../../utils/products.utils";
+import { ProductInfoSection } from "../Products/ProductInfoSection";
 
 export const SelectColor = ({
   colors,
@@ -32,8 +33,7 @@ export const SelectColor = ({
   }, [colorSelected, colors]);
 
   return (
-    <section className="space-y-4">
-      <h3 className=" text-neutral-500">Available Colors</h3>
+    <ProductInfoSection title="Available colors">
       <form className="flex items-center gap-3">
         {colors.map((color, index) => (
           <div
@@ -66,7 +66,7 @@ export const SelectColor = ({
                   id={color}
                   onChange={(e) =>
                     handleChangeAndUpdateParamsUrl(
-                      e,
+                      e.target.value,
                       setColorSelected,
                       "color",
                       setSearchParams,
@@ -77,12 +77,12 @@ export const SelectColor = ({
               </>
             ) : (
               <p className="w-8 h-8 flex items-center justify-center">
-                <RiCloseLine className="text-xl text-neutral-400" />
+                <RiCloseLine className="" />
               </p>
             )}
           </div>
         ))}
       </form>
-    </section>
+      </ProductInfoSection>
   );
 };
