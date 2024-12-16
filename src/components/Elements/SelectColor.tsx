@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { RiCheckLine, RiCloseLine } from "react-icons/ri";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { handleChangeAndUpdateParamsUrl } from "../../utils/products.utils";
 import { ProductInfoSection } from "../Products/ProductInfoSection";
 
@@ -11,7 +11,8 @@ export const SelectColor = ({
   colors: string[];
   stockInThisColor: Record<string, number>;
 }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const colorToDisplay = searchParams.get("color");
   const [colorSelected, setColorSelected] = useState(colorToDisplay!);
   const labelRefs = useRef<HTMLLabelElement[]>([]); // Store references to the labels
@@ -69,8 +70,8 @@ export const SelectColor = ({
                       e.target.value,
                       setColorSelected,
                       "color",
-                      setSearchParams,
-                      searchParams
+                      searchParams,
+                      navigate
                     )
                   }
                 />

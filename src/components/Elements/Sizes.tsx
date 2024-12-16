@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SizeClothesKey, SizeShoesKey } from "../Products/Product.types";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { handleChangeAndUpdateParamsUrl } from "../../utils/products.utils";
 import { ProductInfoSection } from "../Products/ProductInfoSection";
 
@@ -11,10 +11,11 @@ export const Sizes = ({
   sizes: SizeClothesKey[] | SizeShoesKey[];
   stockBySizes: Record<string, number>
 }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [selectedSize, setSelectedSize] = useState<string>(
     searchParams.get("size")!
   );
+  const navigate = useNavigate();
   
 
   const sizesMap: Record<SizeClothesKey, string> = {
@@ -48,8 +49,8 @@ export const Sizes = ({
                   e.target.value,
                   setSelectedSize,
                   "size",
-                  setSearchParams,
-                  searchParams
+                  searchParams,
+                  navigate
                 )
               }
               disabled={stockBySizes[size.toString()] === 0}

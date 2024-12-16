@@ -2,7 +2,7 @@ import { useState } from "react";
 import { RiAddLine, RiSubtractLine } from "react-icons/ri";
 import { ProductInfoSection } from "../Products/ProductInfoSection";
 import { handleChangeAndUpdateParamsUrl } from "../../utils/products.utils";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 
 export const QuantityModifier = ({
   stock,
@@ -11,14 +11,15 @@ export const QuantityModifier = ({
   stock: Record<string, number>;
   selectedKey: string | null
 }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [quantity, setQuantity] = useState(searchParams.get("quantity")!);
 
   const handleAddProduct = () => {
     const quantityNumber = Number(quantity)
     if(selectedKey && stock[selectedKey] > quantityNumber) {      
       const newQuantity = quantityNumber + 1
-      handleChangeAndUpdateParamsUrl(newQuantity.toString(), setQuantity, "quantity", setSearchParams, searchParams)
+      handleChangeAndUpdateParamsUrl(newQuantity.toString(), setQuantity, "quantity",searchParams, navigate)
     }
   }
 
@@ -26,7 +27,7 @@ export const QuantityModifier = ({
     const quantityNumber = Number(quantity)
     if(quantityNumber > 1) {
       const newQuantity = quantityNumber - 1
-      handleChangeAndUpdateParamsUrl(newQuantity.toString(), setQuantity, "quantity", setSearchParams, searchParams)
+      handleChangeAndUpdateParamsUrl(newQuantity.toString(), setQuantity, "quantity",searchParams, navigate)
     }
   }
 

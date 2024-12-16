@@ -60,3 +60,11 @@ export type ProductType = {
   sizes: SizeClothesKey[] | SizeShoesKey[];
   sold: number;
 };
+
+export type CartType = {
+  product: string,
+  size?: string,
+  color: string,
+  quantity: number,
+  price: number
+}

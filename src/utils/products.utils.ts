@@ -1,6 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
 import { ImageItem } from "../components/Products/Product.types";
-import { SetURLSearchParams } from "react-router";
+import { NavigateFunction } from "react-router";
+
+
 
 export const preloadImages = (images: { image_url: string }[]) => {
   images.forEach((image) => {
@@ -30,11 +32,19 @@ export const handleChangeAndUpdateParamsUrl = (
   item: string,
   setItem: Dispatch<SetStateAction<string>>,
   paramsName: string,
-  setSearchParams: SetURLSearchParams,
-  searchParams: URLSearchParams
+  searchParams: URLSearchParams,
+  navigate: NavigateFunction
 ) => {
 
-  setItem(item);
+
+  setItem(item); 
   searchParams.set(paramsName, item);
-  setSearchParams(searchParams);
+
+  navigate(
+    {
+      pathname: location.pathname,
+      search: searchParams.toString(),
+    },
+    { replace: true }
+  );
 };
