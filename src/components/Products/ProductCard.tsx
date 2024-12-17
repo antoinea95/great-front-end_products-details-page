@@ -25,15 +25,15 @@ export const ProductCard = ({ product }: { product: ProductType }) => {
 
   return (
     <section className="group pb-3 rounded-lg hover:bg-neutral-50 transition-all">
-      <header className="rounded-lg overflow-hidden w-full h-72 relative flex items-center justify-center group-hover:shadow-md transition-all">
-        <img
-          src={coverImg?.image_url}
+      <header className="rounded-lg overflow-hidden w-full min-w-52 h-64 relative flex items-center justify-center group-hover:shadow-md transition-all">
+       {coverImg ? <img
+          src={coverImg.image_url}
           alt={`Product: ${product.name} in color ${colorToDisplay}`}
           className="object-cover w-full h-full group-hover:scale-110 group-hover:drop-shadow-xl transition-all"
           loading="lazy"
-        />
+        /> : <div className="w-full h-full bg-neutral-200" />}
       </header>
-      <section className="flex flex-col justify-between gap-4 px-2 pt-4">
+      <section className="flex flex-col justify-between gap-4 pt-4">
         <div className="leading-3">
           <small className="capitalize text-neutral-600">
             {colorToDisplay}

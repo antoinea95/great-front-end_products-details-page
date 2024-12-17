@@ -4,7 +4,7 @@ import { InventoryItem } from "../Products/Product.types";
 export const PriceTag = ({inventoryItem} : {inventoryItem: InventoryItem}) => {
 
     const {pathname} = useLocation();
-    const isGrid = pathname.includes("shop-all") || pathname.includes("lastest");
+    const isGrid = pathname.includes("shop-all") || pathname.includes("latest");
     const styleOfText = isGrid ? "text-lg text-neutral-500" : "text-3xl text-neutral-900"
     const displaySalePrice = inventoryItem.sale_price !== inventoryItem.list_price;
 

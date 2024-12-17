@@ -29,6 +29,11 @@ export type InventoryItem = {
   stock: number;
 };
 
+export type InfoType = {
+  title: string;
+  description: string[]
+}
+
 type PriceRange = {
   highest: number;
   lowest: number;
@@ -51,6 +56,7 @@ export type ProductType = {
   created_at: string;
   description: string;
   images: ImageItem[];
+  info: InfoType[];
   inventory: InventoryItem[];
   name: string;
   priceRange: PriceRange;

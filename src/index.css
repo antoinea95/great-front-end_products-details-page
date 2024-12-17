@@ -35,3 +35,11 @@ button {
   color: #000;
   font-weight: bold;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+}

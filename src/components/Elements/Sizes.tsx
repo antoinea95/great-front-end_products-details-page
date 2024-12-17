@@ -16,6 +16,7 @@ export const Sizes = ({
     searchParams.get("size")!
   );
   const navigate = useNavigate();
+  const isStock = (size: number | SizeClothesKey) => stockBySizes[size.toString()] > 0
   
 
   const sizesMap: Record<SizeClothesKey, string> = {
@@ -32,7 +33,7 @@ export const Sizes = ({
           <div
             key={size}
             className={`px-6 py-2 border rounded-md ${
-              selectedSize === size.toString() ? " border-indigo-700" : ""
+              !isStock(size) ? "border-none bg-neutral-100 text-neutral-400" : selectedSize === size.toString() ? " border-indigo-700" : ""
             }`}
           >
             <label htmlFor={size.toString()} className="text-lg font-medium">
@@ -53,7 +54,7 @@ export const Sizes = ({
                   navigate
                 )
               }
-              disabled={stockBySizes[size.toString()] === 0}
+              disabled={!isStock(size)}
             />
           </div>
         ))}

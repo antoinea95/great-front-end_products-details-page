@@ -1,43 +1,80 @@
 import { ImageItem } from "./Product.types";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export const ProductCarousel = ({ images }: { images: ImageItem[] }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  let isDragging = false;
+  let startX = 0;
+  let scrollLeft = 0;
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if(!scrollContainerRef.current) return;
+    isDragging = true;
+    startX = e.pageX - scrollContainerRef.current.offsetLeft;
+    scrollLeft = scrollContainerRef.current.scrollLeft;
+    scrollContainerRef.current.style.cursor = "grabbing";
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = x - startX; // Distance dragged
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    if(!scrollContainerRef.current) return;
+
+    isDragging = false;
+    scrollContainerRef.current.style.cursor = "grab";
+  };
 
   const handleClick = (index: number) => {
     setActiveIndex(index);
   };
 
   return (
-    <section className="space-y-8">
-      <div className="rounded-lg overflow-hidden h-96 w-full">
+    <section className="space-y-8 lg:w-[40%]">
+      <div className="rounded-lg overflow-hidden">
         <img
           src={images[activeIndex].image_url}
-          className="object-cover w-full h-full"
+          className="object-cover w-full h-full max-h-72 sm:max-h-[800px] lg:max-h-none"
         />
       </div>
-      <div className="flex flex-col gap-8 w-full overflow-x-auto">
-       {images.length > 1 && <div className="flex gap-4 w-[110vw]">
-          {images.map((image, index) => (
-            <div
-              key={index}
-              className={`rounded-lg overflow-hidden ${
-                activeIndex === index
-                  ? "border-2 border-indigo-700"
-                  : "border-2 border-transparent"
-              }`}
-              role="button"
-              aria-label="Click to change photo"
-              onClick={() => handleClick(index)}
-            >
-              <img
-                src={image.image_url}
-                alt={``}
-                className="object-cover w-full h-full max-h-32 max-w-20"
-              />
-            </div>
-          ))}
-        </div>}
+      <div
+        className="overflow-x-auto w-full pt-1 pb-4 pr-4 border-black no-scrollbar"
+        ref={scrollContainerRef}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUpOrLeave}
+        onMouseLeave={handleMouseUpOrLeave}
+      >
+        {images.length > 1 && (
+          <div className="flex gap-4 w-fit">
+            {images.map((image, index) => (
+              <div
+                key={index}
+                className={`rounded-lg overflow-hidden w-24 sm:w-40 max-h-40 ${
+                  activeIndex === index
+                    ? "border-2 border-indigo-700"
+                    : "border-2 border-transparent"
+                }`}
+                role="button"
+                aria-label="Click to change photo"
+                onClick={() => handleClick(index)}
+              >
+                <img
+                  src={image.image_url}
+                  alt={``}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

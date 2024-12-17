@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { RiCheckLine, RiCloseLine } from "react-icons/ri";
+import { RiCheckLine } from "react-icons/ri";
 import { useNavigate, useSearchParams } from "react-router";
 import { handleChangeAndUpdateParamsUrl } from "../../utils/products.utils";
 import { ProductInfoSection } from "../Products/ProductInfoSection";
@@ -35,7 +35,7 @@ export const SelectColor = ({
 
   return (
     <ProductInfoSection title="Available colors">
-      <form className="flex items-center gap-3">
+      <form className="flex items-center gap-4 lg:gap-8">
         {colors.map((color, index) => (
           <div
             key={color}
@@ -45,45 +45,39 @@ export const SelectColor = ({
                 : "border-neutral-300"
             } flex items-center justify-center rounded-full`}
           >
-            {stockInThisColor[color] > 0 ? (
-              <>
-                <label
-                  htmlFor={color}
-                  ref={(el) => (labelRefs.current[index] = el!)}
-                  className={`w-8 h-8 rounded-full cursor-pointer flex items-center justify-center`}
-                  style={{
-                    backgroundColor: color,
-                  }}
-                >
-                  {color === colorSelected ? (
-                    <RiCheckLine className="text-xl" />
-                  ) : null}
-                </label>
-                <input
-                  type="radio"
-                  name="color"
-                  className="hidden"
-                  value={color}
-                  id={color}
-                  onChange={(e) =>
-                    handleChangeAndUpdateParamsUrl(
-                      e.target.value,
-                      setColorSelected,
-                      "color",
-                      searchParams,
-                      navigate
-                    )
-                  }
-                />
-              </>
-            ) : (
-              <p className="w-8 h-8 flex items-center justify-center">
-                <RiCloseLine className="" />
-              </p>
-            )}
+            <label
+              htmlFor={color}
+              ref={(el) => (labelRefs.current[index] = el!)}
+              className={`w-8 h-8 rounded-full cursor-pointer flex items-center justify-center relative`}
+              style={{
+                backgroundColor: color,
+              }}
+            >
+              {stockInThisColor[color] === 0 ? (
+                <span className="absolute w-0.5 h-10 rotate-45 bg-neutral-600" />
+              ) : color === colorSelected ? (
+                <RiCheckLine className="text-2xl" />
+              ) : null}
+            </label>
+            <input
+              type="radio"
+              name="color"
+              className="hidden"
+              value={color}
+              id={color}
+              onChange={(e) =>
+                handleChangeAndUpdateParamsUrl(
+                  e.target.value,
+                  setColorSelected,
+                  "color",
+                  searchParams,
+                  navigate
+                )
+              }
+            />
           </div>
         ))}
       </form>
-      </ProductInfoSection>
+    </ProductInfoSection>
   );
 };

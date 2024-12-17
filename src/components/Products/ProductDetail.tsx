@@ -8,8 +8,9 @@ import { useGetProductDetailsByColor } from "../../hooks/products.hook";
 import { CartType, ProductType } from "./Product.types";
 import { PriceTag } from "../Elements/PriceTag";
 import { QuantityModifier } from "../Elements/QuantityModifier";
-import { cardTitle } from "../../utils/tailwindClass";
+import { sectionTitle } from "../../utils/tailwindClass";
 import { useState } from "react";
+import { ProductInfo } from "./ProductInfo";
 
 export const ProductDetail = () => {
   const { productId } = useParams();
@@ -82,13 +83,14 @@ export const ProductDetail = () => {
         setCart([...cart, newItem]);
       }
     };
-    
+
+    const isStockInThisColor = stockInThisColor[colorToDisplay!] > 0    
 
   return (
-    <section className="space-y-12 bg-white px-4 pt-12 rounded-md">
+    <section className="space-y-12 lg:space-y-0 bg-white px-4 py-12 rounded-md lg:flex lg:justify-center lg:gap-8 lg:py-24">
       <ProductCarousel images={images} />
-      <section className="space-y-8">
-        <h1 className={cardTitle}>{product.name}</h1>
+      <section className="space-y-8 lg:w-1/2">
+        <h1 className={sectionTitle}>{product.name}</h1>
         <div className="w-fit space-y-2">
           <PriceTag inventoryItem={inventoryItem} />
           {isDiscount && (
@@ -112,7 +114,11 @@ export const ProductDetail = () => {
           stock={stockBySizes ? stockBySizes : stockInThisColor}
           selectedKey={sizeToDisplay ? sizeToDisplay : colorToDisplay}
         />
-        <button onClick={handleAddCart} className="bg-indigo-700 w-full text-white py-2 rounded-md">Add to cart</button>
+        {!isStockInThisColor && <p className="hidden lg:block text-2xl font-medium text-neutral-900">Sorry, this item is out of stock</p>}
+        <button onClick={handleAddCart} className={`bg-indigo-700 w-full text-white py-4 lg:py-4 rounded-md ${isStockInThisColor ? "bg-indigo-700" : "bg-neutral-100 text-neutral-400"}`} disabled={isStockInThisColor}>Add to cart</button>
+        <div className="space-y-4">
+        {product.info.map((info) => <ProductInfo key={info.title} info={info} />)}
+        </div>
       </section>
     </section>
   );
