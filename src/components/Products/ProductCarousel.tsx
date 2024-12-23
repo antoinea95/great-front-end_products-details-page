@@ -41,7 +41,7 @@ export const ProductCarousel = ({ images }: { images: ImageItem[] }) => {
       <div className="rounded-lg overflow-hidden">
         <img
           src={images[activeIndex].image_url}
-          className="object-cover w-full h-full max-h-96 sm:max-h-[800px] lg:max-h-none"
+          className="object-cover w-full h-96 sm:h-[600px]"
         />
       </div>
       <div
