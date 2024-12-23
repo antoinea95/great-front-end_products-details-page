@@ -8,9 +8,9 @@ export const Nav = ({
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const mobileNav = `bg-gray-200 absolute left-0 top-16 overflow-hidden w-screen h-screen max-h-dvh py-8 px-14 transition-all ${
+  const mobileNav = `bg-neutral-100 absolute left-0 top-16 overflow-hidden w-screen h-screen max-h-dvh py-8 px-8 transition-all ${
     isOpen
-      ? "-translate-x-6 pointer-events-auto"
+      ? "-translate-x-0 pointer-events-auto"
       : "pointer-events-none -translate-x-[100vw]"
   }`;
   const desktopNav =

@@ -35,7 +35,7 @@ export const SelectColor = ({
 
   return (
     <ProductInfoSection title="Available colors">
-      <form className="flex items-center gap-4 lg:gap-8">
+      <form className="flex items-center gap-8">
         {colors.map((color, index) => (
           <div
             key={color}

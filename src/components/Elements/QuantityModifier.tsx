@@ -35,7 +35,7 @@ export const QuantityModifier = ({
 
   return (
     <ProductInfoSection title="Quantity">
-      <div className={`${isStock ? "bg-gray-200 border-gray-400" : "bg-neutral-100 border-neutral-200"} border w-1/2 max-w-32 flex items-center rounded-lg relative`}>
+      <div className={`${isStock ? "bg-neutral-50 border-neutral-200" : "bg-neutral-100 border-neutral-200"} border w-1/2 max-w-32 flex items-center rounded-lg relative`}>
         <button className={`p-2  flex items-center justify-center text-lg font-medium ${isNotEnoughStock || !isStock ? "text-neutral-400" : "text-neutral-600"}`} onClick={handleRemoveProduct} disabled={Number(quantity) === 1 || !isStock}>
           <RiSubtractLine />
         </button>

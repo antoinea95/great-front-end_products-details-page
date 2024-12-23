@@ -41,7 +41,7 @@ export const ProductCarousel = ({ images }: { images: ImageItem[] }) => {
       <div className="rounded-lg overflow-hidden">
         <img
           src={images[activeIndex].image_url}
-          className="object-cover w-full h-full max-h-72 sm:max-h-[800px] lg:max-h-none"
+          className="object-cover w-full h-full max-h-96 sm:max-h-[800px] lg:max-h-none"
         />
       </div>
       <div
@@ -57,7 +57,7 @@ export const ProductCarousel = ({ images }: { images: ImageItem[] }) => {
             {images.map((image, index) => (
               <div
                 key={index}
-                className={`rounded-lg overflow-hidden w-24 sm:w-40 lg:w-28 max-h-40 ${
+                className={`rounded-lg overflow-hidden w-20 sm:w-40 lg:w-28 max-h-40 ${
                   activeIndex === index
                     ? "border-2 border-indigo-700"
                     : "border-2 border-transparent"

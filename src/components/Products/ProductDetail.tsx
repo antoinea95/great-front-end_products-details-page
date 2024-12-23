@@ -8,7 +8,7 @@ import { useGetProductDetailsByColor } from "../../hooks/products.hook";
 import { CartType, ProductType } from "./Product.types";
 import { PriceTag } from "../Elements/PriceTag";
 import { QuantityModifier } from "../Elements/QuantityModifier";
-import { sectionTitle } from "../../utils/tailwindClass";
+import { mainTitle } from "../../utils/tailwindClass";
 import { useState } from "react";
 import { ProductInfo } from "./ProductInfo";
 
@@ -87,10 +87,10 @@ export const ProductDetail = () => {
     const isStockInThisColor = stockInThisColor[colorToDisplay!] > 0    
 
   return (
-    <section className="space-y-12 lg:space-y-0 bg-white px-4 py-12 rounded-md lg:flex lg:justify-center lg:gap-8 lg:py-24">
+    <section className="space-y-12 lg:space-y-0 px-4 py-12 rounded-md lg:flex lg:justify-center lg:gap-8 lg:py-24">
       <ProductCarousel images={images} />
       <section className="space-y-8 lg:w-1/2">
-        <h1 className={sectionTitle}>{product.name}</h1>
+        <h1 className={mainTitle}>{product.name}</h1>
         <div className="w-fit space-y-2">
           <PriceTag inventoryItem={inventoryItem} />
           {isDiscount && (
