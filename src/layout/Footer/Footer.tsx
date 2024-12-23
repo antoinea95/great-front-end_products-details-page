@@ -4,7 +4,7 @@ import { FooterSocialSection } from "./FooterSocialSection";
 
 export const Footer = () => {
   return (
-    <footer className="pb-8 sm:pb-32 px-4 py-2 space-y-8 sm:space-y-12 lg:px-32">
+    <footer className="py-2 space-y-8 sm:space-y-12">
       <NewsLetter />
       <section className="space-y-8 lg:flex lg:items-center lg:justify-between">
         <div className="space-y-4 sm:w-1/2 lg:w-1/3">

@@ -9,7 +9,7 @@ export const Header = () => {
 
   return (
     <header
-      className="col-span-4 sm:col-span-6 lg:col-span-12 h-fit flex items-center justify-between w-[90%] mx-auto py-8"
+      className="col-span-4 sm:col-span-6 lg:col-span-12 h-fit flex items-center justify-between w-[90%] mx-auto py-8 lg:py-4 px-4 sm:px-12 lg:px-24"
       role="banner"
     >
       {/* Logo & Navigation */}

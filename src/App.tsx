@@ -9,7 +9,7 @@ function App() {
   return (
     <main className="mx-auto px-4 pb-4">
       <Header />
-      <div className="bg-white rounded-md mx-auto">
+      <div className="bg-white rounded-md mx-auto pb-12 px-4 sm:px-12 lg:px-24 space-y-8">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/shop-all" element={<ProductsGrid />} />

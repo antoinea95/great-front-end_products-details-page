@@ -88,7 +88,7 @@ export const NewsLetter = () => {
         </p>
       </div>
       <form
-        className="flex flex-col sm:flex-row sm:items-start w-full gap-4 mt-8 sm:mt-0 lg:w-1/3 border"
+        className="flex flex-col sm:flex-row sm:items-start w-full gap-4 mt-8 sm:mt-0 lg:w-1/3"
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col gap-2 flex-1 relative">
