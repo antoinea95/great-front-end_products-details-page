@@ -1,60 +1,24 @@
-import { Dispatch, SetStateAction } from "react";
 import { RiStarFill } from "react-icons/ri";
 
 export const FilterCheckBox = ({
-  setFilterFn,
-  filtersActive,
-  items,
-  filterKey,
+  name,
+  item,
+  handleCheck
 }: {
-  setFilterFn: Dispatch<SetStateAction<Record<string, string[] | null>>>;
-  filtersActive: Record<string, string[] | null>;
-  items: { name: string; id: string }[] | number[];
-  filterKey: string;
+  name: string,
+  item: {id: string, name: string} | number;
+  handleCheck: (e: React.ChangeEvent<HTMLInputElement>, filterKey: string) => void
 }) => {
-  const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const arrayFilter = filtersActive[filterKey]
-      ? filtersActive[filterKey]
-      : [];
-
-    if (arrayFilter.length === 0) {
-      setFilterFn({
-        ...filtersActive,
-        [filterKey]: [e.target.value],
-      });
-    }
-    if (!arrayFilter?.includes(e.target.value)) {
-      setFilterFn({
-        ...filtersActive,
-        [filterKey]: [...arrayFilter, e.target.value],
-      });
-    } else if (arrayFilter.includes(e.target.value)) {
-      setFilterFn({
-        ...filtersActive,
-        [filterKey]: arrayFilter.filter(
-          (filter: string) => filter !== e.target.value
-        ),
-      });
-    }
-  };
-
+ 
   return (
-    <ul
-      className={`list-none ${
-        filterKey === "colors"
-          ? "flex items-center gap-4 flex-wrap"
-          : "space-y-2"
-      }`}
-    >
-      {items.map((item) =>
-        typeof item === "number" ? (
-          <li key={item}>
+    <>
+          {typeof item === "number" ? (<li>
             <label htmlFor={item.toString()}>
               <span className="inline-flex gap-1">
                 {Array.from({ length: 5 }).map((_, index) => (
                   <RiStarFill
                     className={`${
-                      item >= index + 1 ? "fill-yellow-400" : "fill-gray-200"
+                      Number(item) >= index + 1 ? "fill-yellow-400" : "fill-gray-200"
                     } text-xl`}
                     key={index}
                   />
@@ -67,10 +31,10 @@ export const FilterCheckBox = ({
               className="hidden"
               id={item.toString()}
               value={item}
-              onChange={handleCheck}
+              onChange={(e) => handleCheck(e, name)}
             />
           </li>
-        ) : filterKey === "colors" ? (
+        ) : name === "colors" ? (
           <li key={item.id}>
             <label
               htmlFor={item.id}
@@ -85,7 +49,7 @@ export const FilterCheckBox = ({
               className="hidden"
               value={item.id}
               id={item.id}
-              onChange={handleCheck}
+              onChange={(e) => handleCheck(e, name)}
             />
           </li>
         ) : (
@@ -95,12 +59,12 @@ export const FilterCheckBox = ({
               id={item.id}
               value={item.id}
               type="checkbox"
-              onChange={handleCheck}
+              onChange={(e) => handleCheck(e, name)}
             />
             <label htmlFor={item.id}>{item.name}</label>
           </li>
         )
-      )}
-    </ul>
+      }
+    </>
   );
 };

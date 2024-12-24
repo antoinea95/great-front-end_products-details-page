@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { ProductType } from "./Product.types";
 import { formatImages } from "../../utils/products.utils";
 import { useNavigate } from "react-router";
@@ -6,7 +6,7 @@ import { useGetProductDetailsByColor } from "../../hooks/products.hook";
 import { PriceTag } from "../Elements/PriceTag";
 import { sectionSubtitle } from "../../utils/tailwindClass";
 
-export const ProductCard = ({ product }: { product: ProductType }) => {
+export const ProductCard = React.memo(({ product }: { product: ProductType }) => {
   const [colorToDisplay, setColorToDisplay] = useState(product.colors[0]);
   const { inventoryItem } = useGetProductDetailsByColor(product, colorToDisplay);
   const navigate = useNavigate();
@@ -93,4 +93,4 @@ export const ProductCard = ({ product }: { product: ProductType }) => {
       </section>
     </section>
   );
-};
+});

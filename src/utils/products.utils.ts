@@ -48,3 +48,17 @@ export const handleChangeAndUpdateParamsUrl = (
     { replace: true }
   );
 };
+
+export const extractUniqueFilters = <T extends { id: string; name: string }>(
+  items: T[]
+): { id: string; name: string }[] => {
+  const seen = new Set<string>();
+  return items.filter((item) => {
+    if (!seen.has(item.id)) {
+      seen.add(item.id);
+      return true;
+    }
+    return false;
+  });
+};
+
